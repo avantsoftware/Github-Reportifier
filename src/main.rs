@@ -1,11 +1,11 @@
-use reqwest::blocking::Client;
-use serde::{Deserialize, Serialize};
-use dotenv::dotenv;
-use std::env;
 use chrono::{NaiveDate, NaiveDateTime};
 use clap::Parser;
+use dotenv::dotenv;
+use reqwest::blocking::Client;
+use serde::{Deserialize, Serialize};
+use std::env;
 use std::error::Error;
-use tabled::{Table, Tabled, Style};
+use tabled::{object::Columns, Modify, Style, Table, Tabled, Width};
 
 #[derive(Debug, Deserialize, Serialize)]
 struct SearchResult {
@@ -75,8 +75,8 @@ fn run() -> Result<(), Box<dyn Error>> {
         .expect("GITHUB_TOKEN must be set in .env file or environment variables");
     let repo_owner = env::var("REPO_OWNER")
         .expect("REPO_OWNER must be set in .env file or environment variables");
-    let repo_name = env::var("REPO_NAME")
-        .expect("REPO_NAME must be set in .env file or environment variables");
+    let repo_name =
+        env::var("REPO_NAME").expect("REPO_NAME must be set in .env file or environment variables");
 
     let client = Client::builder().user_agent("rust-lang").build()?;
 
@@ -94,8 +94,8 @@ fn fetch_pull_requests(
     repo_name: &str,
     args: &Cli,
 ) -> Result<Vec<Issue>, Box<dyn Error>> {
-    let start_date = NaiveDate::from_ymd_opt(args.year, args.month, 1)
-        .ok_or("Invalid start date")?;
+    let start_date =
+        NaiveDate::from_ymd_opt(args.year, args.month, 1).ok_or("Invalid start date")?;
 
     let end_date = if args.month == 12 {
         NaiveDate::from_ymd_opt(args.year + 1, 1, 1)
@@ -163,11 +163,7 @@ fn fetch_pull_requests(
     Ok(prs)
 }
 
-fn output_results(
-    prs: &Vec<Issue>,
-    repo_name: &str,
-    args: &Cli,
-) -> Result<(), Box<dyn Error>> {
+fn output_results(prs: &Vec<Issue>, repo_name: &str, args: &Cli) -> Result<(), Box<dyn Error>> {
     if args.output.to_lowercase() == "json" {
         let json_output = serde_json::to_string_pretty(&prs)?;
         println!("{}", json_output);
@@ -179,7 +175,10 @@ fn output_results(
                 .body
                 .clone()
                 .unwrap_or_else(|| "No description".to_string());
-            let dev = issue.user.as_ref().map_or("Unknown".to_string(), |u| u.login.clone());
+            let dev = issue
+                .user
+                .as_ref()
+                .map_or("Unknown".to_string(), |u| u.login.clone());
             let repo = repo_name.to_string();
 
             let start_date =
@@ -210,11 +209,17 @@ fn output_results(
             rows.push(row);
         }
 
-        let table = Table::new(rows).with(Style::modern());
+        let mut table = Table::new(rows);
 
-        println!("{}", table);
+        table = table
+            .with(Style::modern())
+            .with(Modify::new(Columns::single(1)).with(Width::wrap(30).keep_words()))
+            .with(Modify::new(Columns::single(2)).with(Width::wrap(40).keep_words()))
+            .with(Modify::new(Columns::single(3)).with(Width::truncate(25).suffix("...")))
+            .with(Modify::new(Columns::single(4)).with(Width::truncate(10).suffix("...")));
+
+        println!("{}", &table);
     }
 
     Ok(())
 }
-
