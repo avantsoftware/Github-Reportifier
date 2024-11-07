@@ -5,7 +5,7 @@ Installation
 
 ### Clone the Repository:
 
-`git clone https://github.com/marcosouzabarreto/Github-Reportifier.git`
+`git clone git@github.com:marcosouzabarreto/Github-Reportifier.git`
 
 ### Navigate to the Project Directory:
 
