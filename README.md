@@ -60,16 +60,5 @@ Sample Table Output:
 If you specify --output json, the report will be output in JSON format.
 
 Sample JSON Output:
+![image](https://github.com/user-attachments/assets/4ce6dcc8-9655-4cea-80d7-65168eee0537)
 
-[
-  {
-    "number": 631,
-    "title": "fix: this fixes something",
-    "body": "this is the description",
-    "user": {
-      "login": "marcosouzabarreto"
-    },
-    "created_at": "2023-09-14T12:29:39Z",
-    "closed_at": null
-  }
-]
