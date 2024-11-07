@@ -1,7 +1,11 @@
 # GitHub PR Reporter
 
 A Rust application that generates a report of GitHub pull requests for a specified repository and month. The report can be output in either a table or JSON format.
-Installation
+
+## Installation
+
+## Install Rust
+Follow instructions at [Rust's official web page](https://www.rust-lang.org/tools/install)
 
 ### Clone the Repository:
 
@@ -15,7 +19,7 @@ Installation
 
 `cargo build --release`
 
-### Configuration:
+## Configuration:
 
 Create a .env file in the project root directory and add the following variables:
 
@@ -25,7 +29,7 @@ REPO_OWNER=your_repo_owner
 REPO_NAME=your_repo_name
 ```
 
-### Usage:
+## Usage:
 
 Run the application using cargo run with the desired options:
 
