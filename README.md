@@ -9,7 +9,7 @@ Follow instructions at [Rust's official web page](https://www.rust-lang.org/tool
 
 ### Clone the Repository:
 
-`git clone git@github.com:marcosouzabarreto/Github-Reportifier.git`
+`git clone git@github.com:avantsoftware/Github-Reportifier.git`
 
 ### Navigate to the Project Directory:
 
