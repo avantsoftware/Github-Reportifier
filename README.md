@@ -5,7 +5,7 @@ A Rust application that generates a report of GitHub pull requests for a specifi
 ## Installation
 
 ## Install Rust
-Follow instructions at [Rust's official web page](https://www.rust-lang.org/tools/install)
+Please make sure you have [Rust](https://www.rust-lang.org/tools/install) installed on your system
 
 ### Clone the Repository:
 
@@ -18,6 +18,9 @@ Follow instructions at [Rust's official web page](https://www.rust-lang.org/tool
 ### Build the Project:
 
 `cargo build --release`
+
+### Move the binary to a directory in your PATH
+`sudo mv target/release/github-reportifier /usr/local/bin/`
 
 ## Configuration:
 
@@ -33,7 +36,7 @@ REPO_NAME=your_repo_name
 
 Run the application using cargo run with the desired options:
 
-cargo run -- --month <MONTH> [OPTIONS]
+github-reportifier --month <MONTH> [OPTIONS]
 
 Options:
 
@@ -45,11 +48,11 @@ Examples:
 
     Generate a Table Report for September 2023
 
-`cargo run -- --year 2023 --month 9`
+`github-reportifier --year 2023 --month 9`
 
     Generate a JSON Report for October 2024
 
-`cargo run -- --year 2024 --month 10 --output json`
+`github-reportifier --year 2024 --month 10 --output json`
 
 ### Output Formats:
 - Table Output
