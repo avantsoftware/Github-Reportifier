@@ -45,11 +45,11 @@ Examples:
 
     Generate a Table Report for September 2023
 
-cargo run -- --year 2023 --month 9
+`cargo run -- --year 2023 --month 9`
 
-Generate a JSON Report for October 2023
+    Generate a JSON Report for October 2024
 
-    cargo run -- --year 2023 --month 10 --output json
+`cargo run -- --year 2024 --month 10 --output json`
 
 ### Output Formats:
 - Table Output
