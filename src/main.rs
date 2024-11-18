@@ -37,7 +37,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     let client = Client::builder().user_agent("rust-lang").build()?;
 
     let prs = fetch_pull_requests(&client, &github_token, &repo_owner, &repo_name, &args)?;
-    let summary = get_prs_summary(&prs);
+    let _summary = get_prs_summary(&prs);
     output_results(&prs, &repo_name, &args)?;
 
     Ok(())
