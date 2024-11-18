@@ -22,6 +22,15 @@ pub struct User {
     pub login: String,
 }
 
+pub struct SummaryFields {
+    pub fix: usize,
+    pub feat: usize,
+    pub refactor: usize,
+    pub test: usize,
+    pub build: usize,
+    pub chore: usize,
+}
+
 #[derive(Tabled)]
 pub struct PullRequestRow {
     #[tabled(rename = "#")]

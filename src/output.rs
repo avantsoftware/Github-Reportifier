@@ -1,5 +1,6 @@
 use crate::cli::Cli;
 use crate::models::{Issue, PullRequestRow};
+use crate::utils::get_days_to_complete;
 use chrono::NaiveDateTime;
 use std::error::Error;
 use tabled::{object::Columns, Modify, Style, Table, Width};
@@ -28,6 +29,7 @@ pub fn output_results(
             let start_date = NaiveDateTime::parse_from_str(&issue.created_at, "%Y-%m-%dT%H:%M:%SZ")?
                 .date();
 
+
             let end_date = if let Some(closed_at_str) = &issue.closed_at {
                 if !closed_at_str.is_empty() {
                     NaiveDateTime::parse_from_str(closed_at_str, "%Y-%m-%dT%H:%M:%SZ")?.date()
@@ -40,7 +42,7 @@ pub fn output_results(
 
             let url = issue.html_url.clone();
 
-            let duration = (end_date - start_date).num_days() + 1;
+            let duration = get_days_to_complete(&issue);
 
             let row = PullRequestRow {
                 number: issue.number,

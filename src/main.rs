@@ -2,15 +2,18 @@ mod cli;
 mod github_api;
 mod models;
 mod output;
+mod summary;
+mod utils;
 
+use clap::Parser;
 use dotenv::dotenv;
+use output::output_results;
 use reqwest::blocking::Client;
 use std::error::Error;
-use clap::Parser;
 
 use crate::cli::Cli;
 use crate::github_api::fetch_pull_requests;
-use crate::output::output_results;
+use crate::summary::get_prs_summary;
 
 fn main() {
     if let Err(e) = run() {
@@ -34,8 +37,8 @@ fn run() -> Result<(), Box<dyn Error>> {
     let client = Client::builder().user_agent("rust-lang").build()?;
 
     let prs = fetch_pull_requests(&client, &github_token, &repo_owner, &repo_name, &args)?;
+    let summary = get_prs_summary(&prs);
     output_results(&prs, &repo_name, &args)?;
 
     Ok(())
 }
-
